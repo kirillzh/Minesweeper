@@ -6,18 +6,8 @@ package com.zhukov.minesweeper.game;
 public class Game {
 
 
-    public enum Action {
-        OPEN, SET_FLAG, REMOVE_FLAG
-    }
-
-    // All possible states of the game
-    private enum GameState {
-        PLAYING, STOPPED, WON, LOST
-    }
-
     private Board board;
     private GameState gameState = GameState.STOPPED;
-
     private int mines;
     private int flags;
 
@@ -25,7 +15,30 @@ public class Game {
 
         mines = 0;
         flags = 0;
+    }
 
+    public int getFlags() {
+        return flags;
+    }
+
+    public void setFlags(int flags) {
+        this.flags = flags;
+    }
+
+    public int getMines() {
+        return mines;
+    }
+
+    public void setMines(int mines) {
+        this.mines = mines;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 
     public void init(int rows, int columns, int mines) {
@@ -56,7 +69,6 @@ public class Game {
                     break;
             }
         }
-
     }
 
     public boolean gameHasEnded() {
@@ -77,14 +89,22 @@ public class Game {
         }
     }
 
-    private void loseGame() {
+    public void loseGame() {
         gameState = GameState.LOST;
         board.reveal();
     }
 
-    private void winGame() {
+    public void winGame() {
         gameState = GameState.WON;
         board.reveal();
+    }
+
+    public boolean lost() {
+        return gameState == GameState.LOST;
+    }
+
+    public boolean won() {
+        return gameState == GameState.WON;
     }
 
     private void removeFlag(Cell cell) {
@@ -101,7 +121,21 @@ public class Game {
         }
     }
 
-    protected Board getBoard() {
+    public Board getBoard() {
         return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public enum Action {
+        OPEN, SET_FLAG, REMOVE_FLAG
+    }
+
+
+    // All possible states of the game
+    private enum GameState {
+        PLAYING, STOPPED, WON, LOST
     }
 }

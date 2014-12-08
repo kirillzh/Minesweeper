@@ -2,6 +2,7 @@ package com.zhukov.minesweeper.game;
 
 import java.util.Random;
 
+
 /**
  * Created by kirill on 12/7/14.
  */
@@ -157,12 +158,11 @@ public class Board {
 
     protected boolean isSolved() {
         int openedCells = 0;
-        for(Cell cell : cells) {
+        for (Cell cell : cells) {
             openedCells += cell.isRevealed() ? 1 : 0;
         }
         return openedCells == (cells.length - mines);
     }
-
 
 
     @Override
@@ -186,11 +186,12 @@ public class Board {
 
 
     public void print() {
-        for(Cell cell : cells) {
-            if(cell.getPosition() % columns == 0) {
+        for (Cell cell : cells) {
+            if (cell.getPosition() % columns == 0) {
                 System.out.println();
             }
             System.out.print(cell.getState() + " ");
         }
     }
+
 }

@@ -11,5 +11,4 @@ public class Test {
         game.init(8, 8, 10);
         game.getBoard().print();
     }
-
 }
