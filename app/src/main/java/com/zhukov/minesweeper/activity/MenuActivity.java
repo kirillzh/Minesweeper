@@ -1,18 +1,14 @@
 package com.zhukov.minesweeper.activity;
 
 import android.app.ActionBar;
-import android.app.ListFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import com.zhukov.minesweeper.R;
-import com.zhukov.minesweeper.game.Board;
+import com.zhukov.minesweeper.fragment.MenuListFragment;
+
 
 public class MenuActivity extends FragmentActivity {
 
@@ -27,8 +23,6 @@ public class MenuActivity extends FragmentActivity {
         // Specify that the Home/Up button should not be enabled, since there is no hierarchical
         // parent.
         actionBar.setHomeButtonEnabled(false);
-        Board board = new Board(0);
-
 
         setContentView(R.layout.activity_menu);
         if (savedInstanceState == null) {
@@ -37,7 +31,6 @@ public class MenuActivity extends FragmentActivity {
                     .commit();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -61,33 +54,4 @@ public class MenuActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class MenuListFragment extends ListFragment implements AdapterView.OnItemClickListener {
-
-        public MenuListFragment() {
-        }
-
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-
-            ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.menu_items, android.R.layout.simple_list_item_1);
-            setListAdapter(arrayAdapter);
-            getListView().setOnItemClickListener(this);
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (position) {
-                case 0:
-                    startActivity(new Intent(getActivity(), BoardActivity.class));
-                case 1:
-                    startActivity(new Intent(getActivity(), BoardActivity.class));
-                case 2:
-
-            }
-        }
-    }
 }

@@ -1,31 +1,25 @@
 package com.zhukov.minesweeper.activity;
 
 import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
-import com.zhukov.minesweeper.BoardAdapter;
 import com.zhukov.minesweeper.R;
+import com.zhukov.minesweeper.fragment.BoardFragment;
+
 
 public class BoardActivity extends FragmentActivity {
 
-    public BoardActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_board);
 
         // Set up action bar.
         final ActionBar actionBar = getActionBar();
@@ -34,12 +28,11 @@ public class BoardActivity extends FragmentActivity {
         // button will take the user one step up in the application's hierarchy.
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_board);
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.board_activity_container, new BoardFragment())
-                    .commit();
-        }
+        BoardFragment boardFragment = new BoardFragment();
+        getFragmentManager()
+                .beginTransaction()
+                .add(R.id.board_activity_container, boardFragment)
+                .commit();
     }
 
 
@@ -76,27 +69,6 @@ public class BoardActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class BoardFragment extends Fragment implements AdapterView.OnItemClickListener {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_board, null);
-            GridView gridView = (GridView) view.findViewById(R.id.board_grid_view);
-            gridView.setAdapter(new BoardAdapter(getActivity().getApplicationContext())); // uses the view to get the context instead of getActivity().
-            return view;
-        }
-
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        }
-    }
 }
 
 
