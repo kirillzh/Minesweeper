@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.zhukov.minesweeper.R;
-import com.zhukov.minesweeper.board.Board;
+import com.zhukov.minesweeper.game.Board;
 
 public class MenuActivity extends FragmentActivity {
 

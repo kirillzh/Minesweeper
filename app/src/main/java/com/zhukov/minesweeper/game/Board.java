@@ -1,4 +1,4 @@
-package com.zhukov.minesweeper.board;
+package com.zhukov.minesweeper.game;
 
 import java.util.Random;
 
@@ -21,6 +21,7 @@ public class Board {
             {INTERMEDIATE_ROWS, INTERMEDIATE_COLUMNS, INTERMEDIATE_MINES},
             {EXPERT_ROWS, EXPERT_COLUMNS, EXPERT_MINES}
     };
+
     private int rows;
     private int columns;
     private int mines;
@@ -66,10 +67,11 @@ public class Board {
         this.mines = mines;
     }
 
-    private Cell setCell(int position, int state, boolean opened) {
-        cells[position] = new Cell(position, state, opened);
+    private Cell addCell(int position, Cell cell) {
+        cells[position] = cell;
         return cells[position];
     }
+
 
     private Cell getCell(int position) {
         return cells[position];
@@ -129,6 +131,40 @@ public class Board {
         return minesAround;
     }
 
+    public void reveal() {
+        for (Cell cell : cells)
+            cell.reveal();
+    }
+
+    public void openAround(Cell cell) {
+        int x = cell.getPosition() / columns;
+        int y = cell.getPosition() % columns;
+        for (int row = x - 1; row < x + 2; row++) {
+            if (row < 0 || row >= rows)
+                continue;
+            for (int col = y - 1; col < y + 2; col++) {
+                if (col < 0 || col >= columns)
+                    continue;
+                cell = cells[row * columns + col];
+                if (!cell.isRevealed()) {
+                    if (!cell.isMine())
+                        cell.reveal();
+                    openAround(cell);
+                }
+            }
+        }
+    }
+
+    protected boolean isSolved() {
+        int openedCells = 0;
+        for(Cell cell : cells) {
+            openedCells += cell.isRevealed() ? 1 : 0;
+        }
+        return openedCells == (cells.length - mines);
+    }
+
+
+
     @Override
     public String toString() {
         if (cells == null) {
@@ -148,4 +184,13 @@ public class Board {
         return sb.toString();
     }
 
+
+    public void print() {
+        for(Cell cell : cells) {
+            if(cell.getPosition() % columns == 0) {
+                System.out.println();
+            }
+            System.out.print(cell.getState() + " ");
+        }
+    }
 }
