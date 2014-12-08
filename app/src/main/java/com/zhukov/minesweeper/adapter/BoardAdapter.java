@@ -1,4 +1,4 @@
-package com.zhukov.minesweeper;
+package com.zhukov.minesweeper.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -7,11 +7,20 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.zhukov.minesweeper.R;
+import com.zhukov.minesweeper.game.Board;
+import com.zhukov.minesweeper.game.Cell;
+
+
 /**
  * Created by kirill on 12/7/14.
  */
 public class BoardAdapter extends BaseAdapter {
     private Context mContext;
+    private Board board;
+    private Cell[] cells;
+
+
     // references to our images
     private Integer[] cellsImages = {
             R.drawable.empty_cell,
@@ -26,12 +35,15 @@ public class BoardAdapter extends BaseAdapter {
             R.drawable.bomb
     };
 
-    public BoardAdapter(Context c) {
-        mContext = c;
+
+    public BoardAdapter(Context applicationContext, Board board) {
+        mContext = applicationContext;
+        this.board = board;
+        cells = board.getCells();
     }
 
     public int getCount() {
-        return cellsImages.length;
+        return cells.length;
     }
 
     public Object getItem(int position) {
@@ -53,8 +65,8 @@ public class BoardAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-
         imageView.setImageResource(R.drawable.empty_cell);
         return imageView;
     }
+
 }
